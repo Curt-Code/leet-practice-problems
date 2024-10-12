@@ -1,0 +1,42 @@
+//This is a practice problem from leetcode where you have to take two linked lists that contain a single digit int per node, which is in reverse order for int position( 5-4-3 = 345), add them, then put them in a new list in reverse order.
+//Here is an example from leetcode: 
+//Input: l1 = [2,4,3], l2 = [5,6,4]
+//Output: [7,0,8]
+//Explanation: 342 + 465 = 807.
+/**
+ * Definition for singly-linked list.                        //Definition for list was provided by leetcode.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* output = new ListNode();
+        ListNode* header = new ListNode();
+        header = output;
+        int carryNum = 0;
+        while(l1 != nullptr || l2 != nullptr || carryNum){        //goes through both lists and add the ints with the carry value. keeps going even if one of the lists is smaller than the other.
+            int sum = carryNum;
+            if(l1 != nullptr) {                                  
+                sum += l1->val;
+                l1 = l1->next;
+            }
+            
+            if(l2 != nullptr) {
+                sum += l2->val;
+                l2 = l2->next;
+            }
+            carryNum = sum/10;
+            output -> next = new ListNode(sum%10);
+            output = output -> next;
+            
+        }
+        
+        return header -> next;
+    }
+};
